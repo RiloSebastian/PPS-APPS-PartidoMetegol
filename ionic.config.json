@@ -1,0 +1,7 @@
+{
+  "name": "partidoMetegol",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}

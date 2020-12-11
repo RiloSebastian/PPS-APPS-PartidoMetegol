@@ -1,0 +1,35 @@
+<div *ngIf='usuario !== null' class='ion-page' id="main">
+    <ion-header class="header-home">
+        <ion-toolbar align='center' color='elemento'>
+            <ion-title>
+                Partido Metegol
+            </ion-title>
+        </ion-toolbar>
+    </ion-header>
+    <ion-content color='fondo'>
+        <ng-container *ngIf='listaPartidos.length > 0'>
+            <div *ngFor='let p of listaPartidos'>
+                <ion-item lines='none' color='elemento' style='margin: 10px; border-radius: 15px'>
+                    <ng-container *ngIf='usuario === "admin@admin.com"'>
+                        <img [src]="p.foto" width="100" height="100" style="border-radius: 10px">
+                    </ng-container>
+                    <ion-label style='margin-left: 5px'>
+                        <p>Fecha: {{p.fecha | date: 'short'}}</p>
+                        <p>Local: {{p.local}}</p>
+                        <p>Visitante: {{p.visitante}}</p>
+                        <p>Resultado: {{p.resultado}}</p>
+                        <ng-container *ngIf='usuario === "admin@admin.com"'>
+                            <ion-button color='primary' (click)='verVideo(p.video)'>Ver Video</ion-button>
+                        </ng-container>
+                    </ion-label>
+                </ion-item>
+            </div>
+        </ng-container>
+         <ion-button *ngIf='usuario === "admin@admin.com"'  color='primary' expand='block' routerLink='/alta-partido'>Cargar nuevo Partido</ion-button>
+    </ion-content>
+    <ion-footer>
+        <ion-toolbar color="fondo">
+            <ion-button color='danger' expand='block' (click)='cerrarSesion()'>Cerrar Sesion</ion-button>
+        </ion-toolbar>
+    </ion-footer>
+</div>

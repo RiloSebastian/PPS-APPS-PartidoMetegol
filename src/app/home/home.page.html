@@ -1,8 +1,8 @@
-<div *ngIf='usuario !== null' class='ion-page' id="main">
+<div *ngIf='!splash' class='ion-page' id="main">
     <ion-header class="header-home">
         <ion-toolbar align='center' color='elemento'>
             <ion-title>
-                Partido Metegol
+                {{usuario}}
             </ion-title>
         </ion-toolbar>
     </ion-header>
@@ -17,7 +17,7 @@
                         <p>Fecha: {{p.fecha | date: 'short'}}</p>
                         <p>Local: {{p.local}}</p>
                         <p>Visitante: {{p.visitante}}</p>
-                        <p>Resultado: {{p.resultado}}</p>
+                        <p>Resultado: {{p.local}} {{p.resultado}} {{p.visitante}}</p>
                         <ng-container *ngIf='usuario === "admin@admin.com"'>
                             <ion-button color='primary' (click)='verVideo(p.video)'>Ver Video</ion-button>
                         </ng-container>
@@ -26,6 +26,7 @@
             </div>
         </ng-container>
          <ion-button *ngIf='usuario === "admin@admin.com"'  color='primary' expand='block' routerLink='/alta-partido'>Cargar nuevo Partido</ion-button>
+         <ion-button color='primary' expand='block' routerLink='/seccion-ganadores'>Ver los Mas ganadores</ion-button>
     </ion-content>
     <ion-footer>
         <ion-toolbar color="fondo">
@@ -33,3 +34,4 @@
         </ion-toolbar>
     </ion-footer>
 </div>
+<img *ngIf='splash' class='spinnerA' src="../../assets/logoMov.png">

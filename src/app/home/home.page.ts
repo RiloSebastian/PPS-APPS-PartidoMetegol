@@ -15,8 +15,8 @@ export class HomePage implements OnDestroy {
 	public usuario: any = null;
 	public subU: any = null;
 	public sub: any = null;
+	public splash: boolean = true;
 	public listaPartidos: Array<any> = [];
-
 	constructor(private router: Router, private auth: AuthService, private comp: ComplementosService, private videoP: VideoPlayer, private partidos: PartidosService) {
 		console.log('accede a usuario');
 		this.subU = this.auth.usuario.subscribe(user => {
@@ -30,6 +30,7 @@ export class HomePage implements OnDestroy {
 						return {...x};
 					})
 				})
+				this.splash = false;
 			}
 		});
 	}
@@ -42,6 +43,7 @@ export class HomePage implements OnDestroy {
 
 	public cerrarSesion() {
 		this.auth.logout().then(() => {
+			this.splash =true;
 			this.comp.playAudio('error');
 			this.router.navigate([''])
 		});

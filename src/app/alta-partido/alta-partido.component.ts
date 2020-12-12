@@ -103,6 +103,7 @@ export class AltaPartidoComponent implements OnInit {
 	}
 
 	tomarVideo() {
+		this.splash = true;
 		let ops: CaptureVideoOptions = { duration: 15 };
 		this.media.captureVideo(ops).then(videoData => {
 			var fullPath = videoData[0].fullPath;
@@ -111,10 +112,10 @@ export class AltaPartidoComponent implements OnInit {
 			return this.file.readAsDataURL(directoryPath, fileName);
 		}).then((dataURL) => {
 			this.form.controls.video.setValue(dataURL);
-			this.comp.presentToastConMensajeYColor('se pudo convertir el archivo.','primary');
+			this.comp.presentToastConMensajeYColor('se pudo convertir el archivo.', 'primary');
 		}).catch(err => {
 			this.comp.presentToastConMensajeYColor('no se pudo convertir el archivo. ' + err, 'danger');
-		});
+		}).finally(() => this.splash = false);
 
 	}
 
@@ -139,9 +140,33 @@ export class AltaPartidoComponent implements OnInit {
 					data.foto = url;
 				}).catch(err => this.comp.presentToastConMensajeYColor(firebaseErrors(err), 'danger'));
 			}
-			this.partidos.crearPartido(data).then(() => {
+			await this.partidos.crearPartido(data).then(r => {
 				this.comp.presentToastConMensajeYColor('Partido Cargado con exito', 'success');
-			}).catch(err => this.comp.presentToastConMensajeYColor(firebaseErrors(err), 'danger')).finally(() => this.splash = false);
+			}).catch(err => this.comp.presentToastConMensajeYColor(firebaseErrors(err), 'danger'));
+			let ganador: string = null;
+			if (this.localR > this.visitanteR) {
+				ganador = data.local
+			} else if (this.localR < this.visitanteR) {
+				ganador = data.visitante;
+			}
+			if (ganador !== null) {
+				let aux: Array<any> = [];
+				await this.partidos.traerEquipos().then(e => {
+					aux = e.docs.map(refDoc => {
+						const x: any = refDoc.data() as any;
+						x['id'] = refDoc.id;
+						return { ...x };
+					});
+				}).catch(err => this.comp.presentToastConMensajeYColor(firebaseErrors(err), 'danger'));
+				let indGan = aux.findIndex(x => x.nombre === ganador)
+				if (indGan !== -1) {
+					aux[indGan].pGanados++;
+					await this.partidos.actualizarEquipo(aux[indGan]).catch(err => this.comp.presentToastConMensajeYColor(firebaseErrors(err), 'danger'));
+				} else {
+					await this.partidos.guardarEquipo({ nombre: ganador, pGanados: 1 }).catch(err => this.comp.presentToastConMensajeYColor(firebaseErrors(err), 'danger'));
+				}
+			}
+			this.splash = false;
 		}
 	}
 

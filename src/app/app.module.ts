@@ -25,11 +25,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { HomePage } from './home/home.page';
 import { AltaPartidoComponent } from './alta-partido/alta-partido.component';
-
+import { SeccionGanadoresComponent } from './seccion-ganadores/seccion-ganadores.component';
 import { AngularFireAuthGuardModule } from '@angular/fire/auth-guard'
 
 @NgModule({
-	declarations: [AppComponent, LoginComponent, HomePage, AltaPartidoComponent],
+	declarations: [AppComponent, LoginComponent, HomePage, AltaPartidoComponent, SeccionGanadoresComponent],
 	entryComponents: [],
 	imports: [
 	BrowserModule, 

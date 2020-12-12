@@ -1,21 +1,42 @@
-.boton{
-	border-radius: 15px;
+.boton {
+    border-radius: 15px;
 }
 
-.azul{
-	background-color:#000099;
+.azul {
+    background-color: #000099;
 }
 
-.rojo{
-	background-color: #CC0000;
+.rojo {
+    background-color: #CC0000;
 }
 
-.menu-items{
-	--ion-background-color: transparent !important;
+.menu-items {
+    --ion-background-color: transparent !important;
 }
 
-.contenido{
-	display: flex;
-	flex-flow: column;
-	justify-content: space-around;
+.contenido {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-around;
+}
+
+.spinnerA {
+    z-index: 10;
+    position: absolute;
+    top: 180px;
+    height: 200;
+    width: 200;
+    animation: spinner 1s ease-in-out infinite both;
+}
+
+@keyframes spinner {
+    0% {
+        -webkit-transform: rotate(0);
+        transform: rotate(0);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
 }

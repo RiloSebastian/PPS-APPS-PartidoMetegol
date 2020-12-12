@@ -13,6 +13,22 @@ export class PartidosService {
     return this.firestore.collection('partidoMetegol').doc('subcolecciones').collection('partidos', ref => ref.orderBy('fecha', 'desc')).snapshotChanges();
   }
 
+  traerEquiposGanadores(){
+    return this.firestore.collection('partidoMetegol').doc('subcolecciones').collection('equipos', ref => ref.orderBy('pGanados', 'desc')).snapshotChanges();
+  }
+
+  traerEquipos(){
+    return this.firestore.collection('partidoMetegol').doc('subcolecciones').collection('equipos').get().toPromise();
+  }
+
+  guardarEquipo(data){
+    return this.firestore.collection('partidoMetegol').doc('subcolecciones').collection('equipos').add(data);
+  }
+
+  actualizarEquipo(data){
+    return this.firestore.collection('partidoMetegol').doc('subcolecciones').collection('equipos').doc(data.id).set(data,{merge:true});
+  }
+
   public crearConId(data: any, id: string) {
     return this.firestore.collection('partidoMetegol').doc('subcolecciones').collection('partidos').doc(id).set(data).then(() => { return id });
   }

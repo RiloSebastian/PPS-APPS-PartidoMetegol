@@ -1,0 +1,18 @@
+<ion-header>
+    <ion-toolbar color="elemento">
+        <ion-back-button slot="start"></ion-back-button>
+        <ion-title>Lista Mayores Ganadores</ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content color='fondo'>
+    <ng-container *ngIf='listaEquipos.length > 0'>
+        <div *ngFor='let eq of listaEquipos'>
+            <ion-item lines='none' color='elemento' style='margin: 10px; border-radius: 15px'>
+                <ion-label style='margin-left: 5px'>
+                    <p>Nombre: {{eq.nombre}}</p>
+                    <p>Partidos Ganados: {{eq.pGanados}}</p>
+                </ion-label>
+            </ion-item>
+        </div>
+    </ng-container>
+</ion-content>
